@@ -2,6 +2,12 @@ import Vapor
 
 final class Routes: RouteCollection {
     func build(_ builder: RouteBuilder) throws {
+        builder.get("me") { req in
+            // return the authenticated user's name
+            let test = try req.user().name
+            return try req.user().name
+        }
+        
         builder.get("hello") { req in
             var json = JSON()
             try json.set("hello", "world")

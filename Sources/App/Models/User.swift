@@ -1,22 +1,20 @@
 import Vapor
 import FluentProvider
+import AuthProvider
 
 final class User: Model {
     let storage = Storage()
     
-    var userId: Int
     var name: String
     var password: String
     
-    init(id: Int, name: String, password: String) {
-        self.userId = id
+    init(name: String, password: String) {
         self.name = name
         self.password = password
     }
     
     // read data from database
     init(row: Row) throws {
-        userId = try row.get("id")
         name = try row.get("name")
         password = try row.get("password")
     }
@@ -24,7 +22,6 @@ final class User: Model {
     // write data to database
     func makeRow() throws -> Row {
         var row = Row()
-        try row.set("id", userId)
         try row.set("name", name)
         try row.set("password", password)
         return row
@@ -34,12 +31,11 @@ final class User: Model {
 extension User: Preparation {
 
     static func prepare(_ database: Database) throws {
-//        try database.create(self) { builder in
-//            builder.id()
-////            builder.int("id")
-//            builder.string("name")
-//            builder.string("password")
-//        }
+        try database.create(self) { builder in
+            builder.id()
+            builder.string("name")
+            builder.string("password")
+        }
     }
     
     static func revert(_ database: Database) throws {
@@ -50,7 +46,6 @@ extension User: Preparation {
 extension User: JSONConvertible {
     convenience init(json: JSON) throws {
         try self.init(
-            id: json.get("id"),
             name: json.get("name"),
             password: json.get("password")
         )
@@ -58,7 +53,6 @@ extension User: JSONConvertible {
     
     func makeJSON() throws -> JSON {
         var json = JSON()
-        try json.set("id", userId)
         try json.set("name", name)
         try json.set("password", password)
         return json
@@ -66,3 +60,16 @@ extension User: JSONConvertible {
 }
 
 extension User: ResponseRepresentable { }
+
+extension User: TokenAuthenticatable {
+    // the token model that should be queried
+    // to authenticate this user
+    public typealias TokenType = XToken
+}
+
+extension Request {
+    func user() throws -> User {
+        let test: User = try auth.assertAuthenticated()
+        return try auth.assertAuthenticated()
+    }
+}
