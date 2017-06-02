@@ -69,7 +69,6 @@ extension User: TokenAuthenticatable {
 
 extension Request {
     func user() throws -> User {
-        let test: User = try auth.assertAuthenticated()
         return try auth.assertAuthenticated()
     }
 }

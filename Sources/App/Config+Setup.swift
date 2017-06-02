@@ -14,9 +14,6 @@ extension Config {
     /// Configure providers
     private func setupProviders() throws {
         try addProvider(MySQLProvider.Provider.self)
-        
-        let tokenMiddleware = TokenAuthenticationMiddleware(User.self)
-        addConfigurable(middleware: tokenMiddleware, name: "tokenMiddleware")
     }
     
     /// Add all models that should have their

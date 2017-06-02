@@ -1,13 +1,8 @@
 import Vapor
+import AuthProvider
 
 final class Routes: RouteCollection {
     func build(_ builder: RouteBuilder) throws {
-        builder.get("me") { req in
-            // return the authenticated user's name
-            let test = try req.user().name
-            return try req.user().name
-        }
-        
         builder.get("hello") { req in
             var json = JSON()
             try json.set("hello", "world")
@@ -28,6 +23,14 @@ final class Routes: RouteCollection {
         
 //        try builder.resource("posts", PostController.self)
         try builder.resource("user", UserController.self)
+        
+        let tokenMiddleware = TokenAuthenticationMiddleware(User.self)
+        builder.group(tokenMiddleware, handler: { authorized in
+            authorized.get("me") { req in
+                // return the authenticated user's name
+                return try req.user().name
+            }
+        })
     }
 }
 
