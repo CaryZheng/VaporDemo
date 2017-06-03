@@ -10,9 +10,10 @@ final class SigninHelper {
             return ResponseWrapper(protocolCode: ProtocolCode.FailParamError)
         }
         
+        let hashPassword = try TokenHelper.createToken(password!)
         let result = try User.makeQuery()
             .filter("name", .equals, name)
-            .filter("password", .equals, password)
+            .filter("password", .equals, hashPassword)
             .first()
         
         if nil != result {
