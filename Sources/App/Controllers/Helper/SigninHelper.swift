@@ -1,9 +1,8 @@
-import Vapor
 import HTTP
 
-final class SigninController {
+final class SigninHelper {
     
-    func handleSignin(req: Request) throws -> ResponseRepresentable {
+    static func handleSignin(req: Request) throws -> ResponseRepresentable {
         let name = req.data["name"]?.string
         let password = req.data["password"]?.string
         

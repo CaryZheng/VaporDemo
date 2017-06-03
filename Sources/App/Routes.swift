@@ -3,8 +3,12 @@ import AuthProvider
 
 final class Routes: RouteCollection {
     func build(_ builder: RouteBuilder) throws {
+        builder.post("signup") { req in
+            try SignupHelper.handleSignup(req: req)
+        }
+        
         builder.post("signin") { req in
-            try SigninController().handleSignin(req: req)
+            try SigninHelper.handleSignin(req: req)
         }
         
         builder.get("hello") { req in
