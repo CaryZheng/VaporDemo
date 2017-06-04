@@ -1,9 +1,37 @@
+import CryptoSwift
+import Foundation
 
 class TokenHelper {
     
-    static func createToken(_ value: String) throws -> String {
+    static func createHashPassword(_ value: String) throws -> String {
         let hashBytes = try CryptoHasher(hash: .sha256, encoding: .base64).make(value.makeBytes())
         return String(bytes: hashBytes)
+    }
+    
+    static func createXToken(account: String) throws -> String {
+        let value = buildXTokeOriginalValueFormat(account: account)
+        
+        let key = DropletHelper.getDroplet().config["aes", "key"]?.string
+        let encrypted = try AES(key: key!.makeBytes()).encrypt(value.makeBytes())
+        
+        return encrypted.base64Encoded.makeString()
+    }
+    
+    static func parseXToken(_ value: String) throws -> String {
+        let key = DropletHelper.getDroplet().config["aes", "key"]?.string
+        let dencrypted = try value.makeBytes().base64Decoded.decrypt(cipher: AES(key: key!.makeBytes()))
+        
+        let values = dencrypted.makeString().components(separatedBy: "_")
+        
+        if values.count < 1 {
+            throw Abort(.badRequest, reason: "Fail to parse XToken")
+        }
+        
+        return values[0]
+    }
+    
+    fileprivate static func buildXTokeOriginalValueFormat(account: String) -> String {
+        return account + "_" + String(Date().timeIntervalSince1970)
     }
     
 }

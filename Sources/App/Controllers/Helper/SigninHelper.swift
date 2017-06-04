@@ -1,4 +1,6 @@
 import HTTP
+import Cache
+import Foundation
 
 final class SigninHelper {
     
@@ -10,14 +12,18 @@ final class SigninHelper {
             return ResponseWrapper(protocolCode: ProtocolCode.FailParamError)
         }
         
-        let hashPassword = try TokenHelper.createToken(password!)
+        let hashPassword = try TokenHelper.createHashPassword(password!)
         let result = try User.makeQuery()
             .filter("name", .equals, name)
             .filter("password", .equals, hashPassword)
             .first()
         
         if nil != result {
-            return ResponseWrapper(protocolCode: ProtocolCode.Success)
+            let xtoken = try TokenHelper.createXToken(account: result!.name)
+            
+            try DropletHelper.getDroplet().cache.set(result!.name, xtoken)
+            
+            return try ResponseWrapper(protocolCode: ProtocolCode.Success).makeResponse(xtoken: xtoken)
         }
         
         return ResponseWrapper(protocolCode: ProtocolCode.FailSignIn)

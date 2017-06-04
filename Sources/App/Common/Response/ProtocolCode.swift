@@ -4,6 +4,8 @@ enum ProtocolCode: Int {
     
     case FailParamError = 400
     
+    case FailInternalError = 500
+    
     case FailSignIn = 10000
     case FailAccountHasExisted = 10001
     

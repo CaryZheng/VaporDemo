@@ -9,6 +9,8 @@ let package = Package(
     dependencies: [
         .Package(url: "https://github.com/vapor/vapor.git", majorVersion: 2),
         .Package(url: "https://github.com/vapor/mysql-provider.git", majorVersion: 2),
+        .Package(url: "https://github.com/vapor/redis-provider.git", majorVersion: 2),
+        .Package(url: "https://github.com/krzyzanowskim/CryptoSwift.git", majorVersion: 0),
         .Package(url: "https://github.com/vapor/auth-provider.git", majorVersion: 1)
     ],
     exclude: [

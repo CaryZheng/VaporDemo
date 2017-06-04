@@ -18,7 +18,7 @@ final class SignupHelper {
             return ResponseWrapper(protocolCode: ProtocolCode.FailAccountHasExisted)
         }
         
-        let hashPassword = try TokenHelper.createToken(password!)
+        let hashPassword = try TokenHelper.createHashPassword(password!)
         try User(name: name!, password: hashPassword).save()
         
         return ResponseWrapper(protocolCode: ProtocolCode.Success)

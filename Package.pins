@@ -56,6 +56,12 @@
       "version": "2.0.0"
     },
     {
+      "package": "CryptoSwift",
+      "reason": null,
+      "repositoryURL": "https://github.com/krzyzanowskim/CryptoSwift.git",
+      "version": "0.6.9"
+    },
+    {
       "package": "Debugging",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/debugging.git",
@@ -95,7 +101,7 @@
       "package": "MySQL",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/mysql.git",
-      "version": "2.0.0"
+      "version": "2.0.1"
     },
     {
       "package": "MySQLDriver",
@@ -113,13 +119,25 @@
       "package": "Node",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/node.git",
-      "version": "2.0.1"
+      "version": "2.0.3"
     },
     {
       "package": "Random",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/random.git",
       "version": "1.0.0"
+    },
+    {
+      "package": "Redis",
+      "reason": null,
+      "repositoryURL": "https://github.com/vapor/redis.git",
+      "version": "2.0.0"
+    },
+    {
+      "package": "RedisProvider",
+      "reason": null,
+      "repositoryURL": "https://github.com/vapor/redis-provider.git",
+      "version": "2.0.0"
     },
     {
       "package": "Routing",
@@ -143,7 +161,7 @@
       "package": "TLS",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/tls.git",
-      "version": "2.0.3"
+      "version": "2.0.4"
     },
     {
       "package": "Vapor",
