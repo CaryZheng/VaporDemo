@@ -3,14 +3,6 @@ import AuthProvider
 
 final class Routes: RouteCollection {
     func build(_ builder: RouteBuilder) throws {
-        builder.post("signup") { req in
-            try SignupHelper.handleSignup(req: req)
-        }
-        
-        builder.post("signin") { req in
-            try SigninHelper.handleSignin(req: req)
-        }
-        
         builder.get("hello") { req in
             var json = JSON()
             try json.set("hello", "world")
@@ -31,6 +23,12 @@ final class Routes: RouteCollection {
         
 //        try builder.resource("posts", PostController.self)
         try builder.resource("user", UserController.self)
+        
+        let signinVC = SigninController()
+        builder.post("signin", handler: signinVC.create)
+        
+        let signupVC = SignupController()
+        builder.post("signup", handler: signupVC.create)
         
         let tokenMiddleware = TokenAuthenticationMiddleware(User.self)
         builder.group(tokenMiddleware, handler: { authorized in

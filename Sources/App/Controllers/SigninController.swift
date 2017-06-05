@@ -1,12 +1,12 @@
+import Vapor
 import HTTP
-import Cache
-import Foundation
 
-final class SigninHelper {
+final class SigninController {
     
-    static func handleSignin(req: Request) throws -> ResponseRepresentable {
-        let name = req.data["name"]?.string
-        let password = req.data["password"]?.string
+    func create(request: Request) throws -> ResponseRepresentable {
+        
+        let name = request.data["name"]?.string
+        let password = request.data["password"]?.string
         
         if nil == name || nil == password {
             return ResponseWrapper(protocolCode: ProtocolCode.FailParamError)

@@ -1,10 +1,12 @@
+import Vapor
 import HTTP
 
-final class SignupHelper {
-    
-    static func handleSignup(req: Request) throws -> ResponseRepresentable {
-        let name = req.data["name"]?.string
-        let password = req.data["password"]?.string
+final class SignupController {
+
+	func create(request: Request) throws -> ResponseRepresentable {
+        
+        let name = request.data["name"]?.string
+        let password = request.data["password"]?.string
         
         if nil == name || nil == password {
             return ResponseWrapper(protocolCode: ProtocolCode.FailParamError)
@@ -23,5 +25,5 @@ final class SignupHelper {
         
         return ResponseWrapper(protocolCode: ProtocolCode.Success)
     }
-    
+
 }
