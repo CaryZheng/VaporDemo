@@ -19,9 +19,14 @@ final class SigninController {
             .first()
         
         if nil != result {
-            let xtoken = try TokenHelper.createXToken(account: result!.name)
+            let xtoken = try TokenHelper.createXToken(userId: "\((result!.id?.int)!)")
             
-            try DropletHelper.getDroplet().cache.set(result!.name, xtoken)
+            let userId = result?.id?.int
+            if nil == userId {
+                return ResponseWrapper(protocolCode: ProtocolCode.FailInternalError)
+            }
+            
+            try DropletHelper.getDroplet().cache.set("\(userId!)", xtoken)
             
             return try ResponseWrapper(protocolCode: ProtocolCode.Success).makeResponse(xtoken: xtoken)
         }

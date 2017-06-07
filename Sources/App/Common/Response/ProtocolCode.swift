@@ -3,6 +3,7 @@ enum ProtocolCode: Int {
     case Success = 200
     
     case FailParamError = 400
+    case FailTokenInvalid = 401
     
     case FailInternalError = 500
     

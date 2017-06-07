@@ -28,9 +28,5 @@ extension Config {
         preparations += [
             User.self
         ]
-        
-        preparations += [
-            XToken.self
-        ]
     }
 }

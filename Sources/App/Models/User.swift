@@ -60,15 +60,3 @@ extension User: JSONConvertible {
 }
 
 extension User: ResponseRepresentable { }
-
-extension User: TokenAuthenticatable {
-    // the token model that should be queried
-    // to authenticate this user
-    public typealias TokenType = XToken
-}
-
-extension Request {
-    func user() throws -> User {
-        return try auth.assertAuthenticated()
-    }
-}

@@ -8,8 +8,8 @@ class TokenHelper {
         return String(bytes: hashBytes)
     }
     
-    static func createXToken(account: String) throws -> String {
-        let value = buildXTokeOriginalValueFormat(account: account)
+    static func createXToken(userId: String) throws -> String {
+        let value = buildXTokeOriginalValueFormat(userId: userId)
         
         let key = DropletHelper.getDroplet().config["aes", "key"]?.string
         let encrypted = try AES(key: key!.makeBytes()).encrypt(value.makeBytes())
@@ -30,8 +30,8 @@ class TokenHelper {
         return values[0]
     }
     
-    fileprivate static func buildXTokeOriginalValueFormat(account: String) -> String {
-        return account + "_" + String(Date().timeIntervalSince1970)
+    fileprivate static func buildXTokeOriginalValueFormat(userId: String) -> String {
+        return userId + "_" + String(Date().timeIntervalSince1970)
     }
     
 }

@@ -29,14 +29,6 @@ final class Routes: RouteCollection {
         
         let signupVC = SignupController()
         builder.post("signup", handler: signupVC.create)
-        
-        let tokenMiddleware = TokenAuthenticationMiddleware(User.self)
-        builder.group(tokenMiddleware, handler: { authorized in
-            authorized.get("me") { req in
-                // return the authenticated user's name
-                return try req.user().name
-            }
-        })
     }
 }
 
