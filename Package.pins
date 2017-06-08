@@ -71,19 +71,19 @@
       "package": "Engine",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/engine.git",
-      "version": "2.0.3"
+      "version": "2.0.4"
     },
     {
       "package": "Fluent",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/fluent.git",
-      "version": "2.0.3"
+      "version": "2.0.4"
     },
     {
       "package": "FluentProvider",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/fluent-provider.git",
-      "version": "1.0.0"
+      "version": "1.1.0"
     },
     {
       "package": "JSON",
@@ -167,7 +167,7 @@
       "package": "Vapor",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/vapor.git",
-      "version": "2.0.5"
+      "version": "2.0.7"
     }
   ],
   "version": 1
