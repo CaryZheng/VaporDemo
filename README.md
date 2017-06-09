@@ -42,3 +42,9 @@ A demo for Vapor
 }
 
 ```
+
+## API
+
+[Postman](https://www.getpostman.com/collections/b086c87eca32e606fb00)
+
+The link above includes all APIs via Postman.
