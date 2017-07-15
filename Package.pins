@@ -71,19 +71,19 @@
       "package": "Engine",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/engine.git",
-      "version": "2.0.4"
+      "version": "2.1.1"
     },
     {
       "package": "Fluent",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/fluent.git",
-      "version": "2.0.4"
+      "version": "2.1.2"
     },
     {
       "package": "FluentProvider",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/fluent-provider.git",
-      "version": "1.1.0"
+      "version": "1.1.1"
     },
     {
       "package": "JSON",
@@ -107,7 +107,7 @@
       "package": "MySQLDriver",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/mysql-driver.git",
-      "version": "2.0.1"
+      "version": "2.0.2"
     },
     {
       "package": "MySQLProvider",
@@ -125,7 +125,7 @@
       "package": "Random",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/random.git",
-      "version": "1.0.0"
+      "version": "1.1.1"
     },
     {
       "package": "Redis",
@@ -167,7 +167,7 @@
       "package": "Vapor",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/vapor.git",
-      "version": "2.0.7"
+      "version": "2.1.2"
     }
   ],
   "version": 1
