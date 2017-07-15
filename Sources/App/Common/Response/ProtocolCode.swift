@@ -1,14 +1,14 @@
 
 enum ProtocolCode: Int {
-    case Success = 200
+    case success = 200
     
-    case FailParamError = 400
-    case FailTokenInvalid = 401
+    case failParamError = 400
+    case failTokenInvalid = 401
     
-    case FailInternalError = 500
+    case failInternalError = 500
     
-    case FailSignIn = 10000
-    case FailAccountHasExisted = 10001
+    case failSignIn = 10000
+    case failAccountHasExisted = 10001
     
     func getMsg() -> String {
         return "\(self)"

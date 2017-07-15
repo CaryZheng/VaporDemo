@@ -7,7 +7,7 @@ final class UserController: ResourceRepresentable {
         
         let xtoken = request.headers["XToken"]?.string
         if nil == xtoken {
-            return ResponseWrapper(protocolCode: ProtocolCode.FailTokenInvalid)
+            return ResponseWrapper(protocolCode: ProtocolCode.failTokenInvalid)
         }
         
         let userId = try TokenHelper.parseXToken(xtoken!)
@@ -19,17 +19,17 @@ final class UserController: ResourceRepresentable {
                 .first()
             
             if nil == result {
-                return ResponseWrapper(protocolCode: ProtocolCode.FailInternalError)
+                return ResponseWrapper(protocolCode: ProtocolCode.failInternalError)
             }
             
             var json = JSON()
             try json.set("id", result?.id)
             try json.set("name", result?.name)
             
-            return ResponseWrapper(protocolCode: .Success, obj: json)
+            return ResponseWrapper(protocolCode: .success, obj: json)
         }
         
-        return ResponseWrapper(protocolCode: ProtocolCode.FailTokenInvalid)
+        return ResponseWrapper(protocolCode: ProtocolCode.failTokenInvalid)
     }
 
 	func makeResource() -> Resource<User> {
