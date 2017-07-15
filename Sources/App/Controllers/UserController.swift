@@ -5,12 +5,11 @@ final class UserController: ResourceRepresentable {
 
 	func index(request: Request) throws -> ResponseRepresentable {
         
-        let xtoken = request.headers["XToken"]?.string
-        if nil == xtoken {
-            return ResponseWrapper(protocolCode: ProtocolCode.failTokenInvalid)
-        }
+        try CheckHelper.checkTokenValid(request: request)
         
-        let userId = try TokenHelper.parseXToken(xtoken!)
+        let xtoken = RequestHelper.getXToken(request: request)!
+        
+        let userId = try TokenHelper.parseXToken(xtoken)
         let cacheXToken = try DropletHelper.getDroplet().cache.get(userId)
         if cacheXToken?.string == xtoken {
             

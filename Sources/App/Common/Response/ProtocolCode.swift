@@ -1,5 +1,7 @@
 
 enum ProtocolCode: Int {
+    case unknown = 0
+    
     case success = 200
     
     case failParamError = 400

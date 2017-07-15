@@ -10,6 +10,7 @@ extension Config {
 
         try setupProviders()
         try setupPreparations()
+        setupMiddleware()
     }
     
     /// Configure providers
@@ -29,4 +30,9 @@ extension Config {
             User.self
         ]
     }
+    
+    private func setupMiddleware() {
+        addConfigurable(middleware: MyMiddleware(), name: "MyMiddleware")
+    }
+    
 }

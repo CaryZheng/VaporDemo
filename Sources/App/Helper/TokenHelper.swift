@@ -24,10 +24,20 @@ class TokenHelper {
         let values = dencrypted.makeString().components(separatedBy: "_")
         
         if values.count < 1 {
-            throw Abort(.badRequest, reason: "Fail to parse XToken")
+            throw MyException.tokenInvalid
         }
         
         return values[0]
+    }
+    
+    static func isXTokenValid(_ value: String) -> Bool {
+        do {
+            let _ = try parseXToken(value)
+        } catch {
+            return false
+        }
+        
+        return true
     }
     
     fileprivate static func buildXTokeOriginalValueFormat(userId: String) -> String {
