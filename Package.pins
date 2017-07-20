@@ -71,7 +71,7 @@
       "package": "Engine",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/engine.git",
-      "version": "2.1.1"
+      "version": "2.1.3"
     },
     {
       "package": "Fluent",
@@ -119,7 +119,7 @@
       "package": "Node",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/node.git",
-      "version": "2.0.3"
+      "version": "2.0.4"
     },
     {
       "package": "Random",
@@ -143,13 +143,13 @@
       "package": "Routing",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/routing.git",
-      "version": "2.0.0"
+      "version": "2.0.1"
     },
     {
       "package": "SQLite",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/sqlite.git",
-      "version": "2.0.0"
+      "version": "2.0.2"
     },
     {
       "package": "Sockets",
