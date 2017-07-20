@@ -11,6 +11,36 @@ import HTTP
 class RouteTests: TestCase {
     let drop = try! Droplet.testable()
     
+    let hostname = "localhost:8080"
+    
+    let headers: [HTTP.HeaderKey : String] = [
+        "Content-Type": "application/json"
+    ]
+    
+    func startTestTask() throws {
+        try testSignin()
+        
+        try testHello()
+        try testInfo()
+        try testPlaintext()
+    }
+    
+    func testSignin() throws {
+        // request
+        var requestData = JSON()
+        try requestData.set("name", "cary")
+        try requestData.set("password", "123456")
+        
+        let res = try drop.testResponse(to: .post, at: "signin", hostname: hostname, headers: headers, body: requestData.makeBody())
+        
+        // check
+        let resData = try JSON(bytes: res.body.bytes!)
+        
+        XCTAssertNotNil(resData)
+        XCTAssertEqual(resData["code"]?.int, 200)
+        XCTAssertEqual(resData["msg"]?.string, "success")
+    }
+    
     func testHello() throws {
         try drop
             .testResponse(to: .get, at: "hello")
@@ -24,6 +54,14 @@ class RouteTests: TestCase {
             .assertStatus(is: .ok)
             .assertBody(contains: "0.0.0.0")
     }
+    
+    func testPlaintext() throws {
+        try drop
+            .testResponse(to: .get, at: "plaintext")
+            .assertStatus(is: .ok)
+            .assertBody(equals: "Hello, world!")
+    }
+    
 }
 
 // MARK: Manifest
@@ -33,7 +71,6 @@ extension RouteTests {
     /// to function properly.
     /// See ./Tests/LinuxMain.swift for examples
     static let allTests = [
-        ("testHello", testHello),
-        ("testInfo", testInfo),
+        ("startTestTask", startTestTask)
     ]
 }
