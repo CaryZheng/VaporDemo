@@ -1,3 +1,9 @@
+<p align="left">
+    <a href="https://swift.org">
+        <img src="http://img.shields.io/badge/swift-3.1-brightgreen.svg" alt="Swift 3.1">
+    </a>
+</p>
+
 # VaporDemo
 A demo for Vapor
 
