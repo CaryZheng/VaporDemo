@@ -23,6 +23,10 @@ class RouteTests: TestCase {
         try testHello()
         try testInfo()
         try testPlaintext()
+        
+        // leaf
+        try testLeaftext()
+        try testLeafimage()
     }
     
     func testSignin() throws {
@@ -60,6 +64,18 @@ class RouteTests: TestCase {
             .testResponse(to: .get, at: "plaintext")
             .assertStatus(is: .ok)
             .assertBody(equals: "Hello, world!")
+    }
+    
+    func testLeaftext() throws {
+        try drop
+            .testResponse(to: .get, at: "leaftext")
+            .assertStatus(is: .ok)
+    }
+    
+    func testLeafimage() throws {
+        try drop
+            .testResponse(to: .get, at: "leafimage")
+            .assertStatus(is: .ok)
     }
     
 }
