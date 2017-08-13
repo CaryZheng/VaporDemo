@@ -6,7 +6,7 @@ class ResponseWrapper {
     fileprivate var mObj: JSON?
     
     init(obj: JSON) {
-        self.mProtocolCode = ProtocolCode.Success
+        self.mProtocolCode = ProtocolCode.success
         self.mObj = obj
     }
     

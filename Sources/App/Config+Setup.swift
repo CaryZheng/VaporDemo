@@ -1,6 +1,7 @@
 import MySQLProvider
 import AuthProvider
 import RedisProvider
+import LeafProvider
 
 extension Config {
     public func setup() throws {
@@ -10,12 +11,14 @@ extension Config {
 
         try setupProviders()
         try setupPreparations()
+        setupMiddleware()
     }
     
     /// Configure providers
     private func setupProviders() throws {
         try addProvider(MySQLProvider.Provider.self)
         try addProvider(RedisProvider.Provider.self)
+        try addProvider(LeafProvider.Provider.self)
     }
     
     /// Add all models that should have their
@@ -29,4 +32,9 @@ extension Config {
             User.self
         ]
     }
+    
+    private func setupMiddleware() {
+        addConfigurable(middleware: MyMiddleware(), name: "MyMiddleware")
+    }
+    
 }

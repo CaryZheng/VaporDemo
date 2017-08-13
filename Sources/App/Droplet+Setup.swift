@@ -4,6 +4,7 @@ extension Droplet {
     public func setup() throws {
         DropletHelper.droplet = self
         
-        try collection(Routes.self)
+        let routes = Routes(view)
+        try collection(routes)
     }
 }

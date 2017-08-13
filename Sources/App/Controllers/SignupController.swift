@@ -9,7 +9,7 @@ final class SignupController {
         let password = request.data["password"]?.string
         
         if nil == name || nil == password {
-            return ResponseWrapper(protocolCode: ProtocolCode.FailParamError)
+            return ResponseWrapper(protocolCode: ProtocolCode.failParamError)
         }
         
         let queryResult = try User.makeQuery()
@@ -17,13 +17,13 @@ final class SignupController {
             .first()
         
         if nil != queryResult {
-            return ResponseWrapper(protocolCode: ProtocolCode.FailAccountHasExisted)
+            return ResponseWrapper(protocolCode: ProtocolCode.failAccountHasExisted)
         }
         
         let hashPassword = try TokenHelper.createHashPassword(password!)
         try User(name: name!, password: hashPassword).save()
         
-        return ResponseWrapper(protocolCode: ProtocolCode.Success)
+        return ResponseWrapper(protocolCode: ProtocolCode.success)
     }
 
 }

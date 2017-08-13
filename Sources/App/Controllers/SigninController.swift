@@ -9,7 +9,7 @@ final class SigninController {
         let password = request.data["password"]?.string
         
         if nil == name || nil == password {
-            return ResponseWrapper(protocolCode: ProtocolCode.FailParamError)
+            return ResponseWrapper(protocolCode: ProtocolCode.failParamError)
         }
         
         let hashPassword = try TokenHelper.createHashPassword(password!)
@@ -23,15 +23,15 @@ final class SigninController {
             
             let userId = result?.id?.int
             if nil == userId {
-                return ResponseWrapper(protocolCode: ProtocolCode.FailInternalError)
+                return ResponseWrapper(protocolCode: ProtocolCode.failInternalError)
             }
             
             try DropletHelper.getDroplet().cache.set("\(userId!)", xtoken)
             
-            return try ResponseWrapper(protocolCode: ProtocolCode.Success).makeResponse(xtoken: xtoken)
+            return try ResponseWrapper(protocolCode: ProtocolCode.success).makeResponse(xtoken: xtoken)
         }
         
-        return ResponseWrapper(protocolCode: ProtocolCode.FailSignIn)
+        return ResponseWrapper(protocolCode: ProtocolCode.failSignIn)
     }
     
 }
