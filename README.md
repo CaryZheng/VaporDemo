@@ -1,6 +1,6 @@
 # VaporDemo
 
-[![Language](https://img.shields.io/badge/Swift-3.1-brightgreen.svg)](http://swift.org)
+[![Language](https://img.shields.io/badge/Vapor-2-brightgreen.svg)](https://github.com/vapor/vapor)
 
 A demo for Vapor
 
