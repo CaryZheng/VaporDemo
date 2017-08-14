@@ -2,18 +2,6 @@
   "autoPin": true,
   "pins": [
     {
-      "package": "Auth",
-      "reason": null,
-      "repositoryURL": "https://github.com/vapor/auth.git",
-      "version": "1.1.0"
-    },
-    {
-      "package": "AuthProvider",
-      "reason": null,
-      "repositoryURL": "https://github.com/vapor/auth-provider.git",
-      "version": "1.1.0"
-    },
-    {
       "package": "BCrypt",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/bcrypt.git",

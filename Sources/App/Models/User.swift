@@ -1,6 +1,5 @@
 import Vapor
 import FluentProvider
-import AuthProvider
 
 final class User: Model {
     let storage = Storage()

@@ -1,5 +1,4 @@
 import MySQLProvider
-import AuthProvider
 import RedisProvider
 import LeafProvider
 import MarkdownProvider
@@ -26,10 +25,6 @@ extension Config {
     /// Add all models that should have their
     /// schemas prepared before the app boots
     private func setupPreparations() throws {
-//        preparations += [
-//            Post.self
-//        ]
-        
         preparations += [
             User.self
         ]
