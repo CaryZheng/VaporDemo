@@ -26,6 +26,13 @@ class V1Collection: RouteCollection {
         leaf.get("image") { req in
             return try self.view.make("welcome")
         }
+
+        let myMarkdown = "# Hey #\nCheck out my *awesome* markdown! It is easy to use in `tags`"
+        leaf.get("markdown") { req in
+            return try self.view.make("markdown", [
+                "myMarkdown": myMarkdown
+                ])
+        }
     }
     
     fileprivate func buildUser(_ builder: RouteBuilder) throws {

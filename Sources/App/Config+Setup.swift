@@ -2,6 +2,7 @@ import MySQLProvider
 import AuthProvider
 import RedisProvider
 import LeafProvider
+import MarkdownProvider
 
 extension Config {
     public func setup() throws {
@@ -19,6 +20,7 @@ extension Config {
         try addProvider(MySQLProvider.Provider.self)
         try addProvider(RedisProvider.Provider.self)
         try addProvider(LeafProvider.Provider.self)
+        try addProvider(MarkdownProvider.Provider.self)
     }
     
     /// Add all models that should have their

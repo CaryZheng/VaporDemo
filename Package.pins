@@ -104,6 +104,12 @@
       "version": "1.1.0"
     },
     {
+      "package": "MarkdownProvider",
+      "reason": null,
+      "repositoryURL": "https://github.com/vapor-community/markdown-provider.git",
+      "version": "1.0.0"
+    },
+    {
       "package": "Multipart",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/multipart.git",
@@ -170,6 +176,12 @@
       "version": "2.1.0"
     },
     {
+      "package": "SwiftMarkdown",
+      "reason": null,
+      "repositoryURL": "https://github.com/vapor-community/markdown.git",
+      "version": "0.3.0"
+    },
+    {
       "package": "TLS",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/tls.git",
@@ -180,6 +192,12 @@
       "reason": null,
       "repositoryURL": "https://github.com/vapor/vapor.git",
       "version": "2.2.0"
+    },
+    {
+      "package": "cmark",
+      "reason": null,
+      "repositoryURL": "https://github.com/brokenhandsio/cmark-gfm.git",
+      "version": "1.0.0"
     }
   ],
   "version": 1
