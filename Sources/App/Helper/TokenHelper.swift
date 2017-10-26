@@ -3,6 +3,8 @@ import Foundation
 
 class TokenHelper {
     
+    fileprivate static let AES_IV = "drowssapdrowssao"
+    
     static func createHashPassword(_ value: String) throws -> String {
         let hashBytes = try CryptoHasher(hash: .sha256, encoding: .base64).make(value.makeBytes())
         return String(bytes: hashBytes)
@@ -12,21 +14,21 @@ class TokenHelper {
         let value = buildXTokeOriginalValueFormat(userId: userId)
         
         let key = DropletHelper.getDroplet().config["aes", "key"]?.string
-        let encrypted = try AES(key: key!.makeBytes()).encrypt(value.makeBytes())
+        let encrypted = try AES(key: key!, iv: AES_IV).encrypt(value.makeBytes())
         
         return encrypted.base64Encoded.makeString()
     }
     
     static func parseXToken(_ value: String) throws -> String {
         let key = DropletHelper.getDroplet().config["aes", "key"]?.string
-        let dencrypted = try value.makeBytes().base64Decoded.decrypt(cipher: AES(key: key!.makeBytes()))
-        
+        let dencrypted = try value.makeBytes().base64Decoded.decrypt(cipher: AES(key: key!, iv: AES_IV))
+
         let values = dencrypted.makeString().components(separatedBy: "_")
-        
+
         if values.count < 1 {
             throw MyException.tokenInvalid
         }
-        
+
         return values[0]
     }
     
