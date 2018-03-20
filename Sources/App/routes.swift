@@ -9,6 +9,21 @@ public func routes(_ router: Router) throws {
     router.get("hello") { req in
         return "Hello, world!"
     }
+    
+    router.post("users") { req -> Future<Response> in
+        let user = try req.content.decode(User.self)
+        
+        return user.map(to: Response.self) { user in
+            _ = user.create(on: req)
+            return req.redirect(to: "users")
+        }
+    }
+    
+    router.get("users") { req -> Future<[User]> in
+        let allUsers = User.query(on: req).all()
+        
+        return allUsers
+    }
 
     // Example of creating a Service and using it.
     router.get("hash", String.parameter) { req -> String in
