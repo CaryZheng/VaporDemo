@@ -24,14 +24,13 @@ public func configure(
     middlewares.use(ErrorMiddleware.self) // Catches errors and converts to HTTP response
     services.register(middlewares)
     
-    // Configure a SQLite database
-    var mysqlConfig = DatabaseConfig()
-    mysqlConfig.add(database: MySQLDatabase(hostname: "localhost", port: 3306, user: "ZWeatherUser", password: "ZWeatherUser123456", database: "ZWeather"), as: .mysql)
+    // Configure a MySQL database
+    let mysqlConfig = MySQLDatabaseConfig(hostname: "localhost", port: 3306, username: "ZWeatherUser", password: "ZWeatherUser123456", database: "vapor_test")
     services.register(mysqlConfig)
     
     // Configure migrations
     var migrations = MigrationConfig()
-    migrations.add(model: Todo.self, database: .mysql)
+//    migrations.add(model: Todo.self, database: .mysql)
     migrations.add(model: User.self, database: .mysql)
     services.register(migrations)
 
