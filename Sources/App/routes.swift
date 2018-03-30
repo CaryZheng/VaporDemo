@@ -11,6 +11,19 @@ public func routes(_ router: Router) throws {
         return "Hello, world!"
     }
     
+    router.get("test") { req -> String in
+        struct TestUser: Codable {
+            var name: String
+            var age: Int
+            var score: Int
+        }
+        
+        let user = TestUser(name: "gg", age: 18, score: 88)
+        let response = ResponseWrapper<TestUser>(protocolCode: .failSignIn, obj: user).makeResponse()
+        
+        return response
+    }
+    
     router.get("users") { req -> Future<[User]> in
         let allUsers = User.query(on: req).all()
         
@@ -42,14 +55,14 @@ public func routes(_ router: Router) throws {
     router.get("hash", String.parameter) { req -> String in
         // Create a BCryptHasher using the Request's Container
         let hasher = try req.make(BCryptHasher.self)
-        
+
         // Fetch the String parameter (as described in the route)
         let string = try req.parameter(String.self)
-        
+
         // Return the hashed string!
         return try hasher.make(string)
     }
-    
+
     // Example of configuring a controller
     let todoController = TodoController()
     router.get("todos", use: todoController.index)
