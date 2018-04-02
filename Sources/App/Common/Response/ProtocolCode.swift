@@ -10,6 +10,7 @@ enum ProtocolCode: Int, Codable {
     
     case failSignIn = 10000
     case failAccountHasExisted = 10001
+    case failAccountNoExisted = 10002
     
     func getMsg() -> String {
         return "\(self)"

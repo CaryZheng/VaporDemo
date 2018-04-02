@@ -24,28 +24,29 @@ public func routes(_ router: Router) throws {
         return response
     }
     
+    // Fetch all users
     router.get("users") { req -> Future<[User]> in
-        let allUsers = User.query(on: req).all()
-        
-        return allUsers
+        return User.query(on: req).all()
     }
     
+    // Fetch specified user
     router.get("users", Int.parameter) { req -> Future<String> in
         let userId = try req.parameter(Int.self)
         return try User.query(on: req).filter(\.id == userId).first().map(to: String.self) { user in
             if user != nil {
-                return "The account is existed"
+                return ResponseWrapper(protocolCode: .success, obj: user).makeResponse()
             }
             
-            return "The account is not existed"
+            return ResponseWrapper<DefaultResponseObj>(protocolCode: .failAccountNoExisted).makeResponse()
         }
     }
     
+    // Create new user
     router.post("user") { req -> Future<String> in
         let result = try req.content.decode(User.self).map(to: String.self) { user in
             _ = user.save(on: req)
             
-            return "create user success"
+            return ResponseWrapper(protocolCode: .success, obj: user).makeResponse()
         }
         
         return result

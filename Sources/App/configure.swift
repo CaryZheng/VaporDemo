@@ -22,7 +22,10 @@ public func configure(
     // middlewares.use(FileMiddleware.self) // Serves files from `Public/` directory
     middlewares.use(DateMiddleware.self) // Adds `Date` header to responses
     middlewares.use(ErrorMiddleware.self) // Catches errors and converts to HTTP response
+    middlewares.use(MyMiddleware.self)
     services.register(middlewares)
+    
+    services.register(MyMiddleware.self) { container in MyMiddleware() }
     
     // Configure a MySQL database
     let mysqlConfig = MySQLDatabaseConfig(hostname: "localhost", port: 3306, username: "ZWeatherUser", password: "ZWeatherUser123456", database: "vapor_test")
