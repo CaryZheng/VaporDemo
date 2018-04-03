@@ -2,6 +2,7 @@ import Routing
 import Vapor
 import FluentMySQL
 import Crypto
+import Random
 
 /// Register your application's routes here.
 ///
@@ -56,11 +57,32 @@ public func routes(_ router: Router) throws {
     // Hash
     router.get("crypto", "hash", String.parameter) { req -> String in
         let value = try req.parameter(String.self)
-        let hashData = try SHA1.hash(value)
         
+        let hashData = try SHA1.hash(value)
         let result = hashData.hexEncodedString()
         
         return ResponseWrapper(protocolCode: .success, obj: result).makeResponse()
+    }
+    
+    // AES128
+    router.get("crypto", "aes128", String.parameter) { req -> String in
+        let value = try req.parameter(String.self)
+        
+        let key = "qwertgfdsa123490"
+        
+        let ciphertext = try AES128.encrypt(value, key: key)
+        let originalData = try AES128.decrypt(ciphertext, key: key)
+        
+        let result = String(data: originalData, encoding: .utf8)!
+        
+        return ResponseWrapper(protocolCode: .success, obj: result).makeResponse()
+    }
+    
+    // Random
+    router.get("crypto", "random") { req -> String in
+        let randomInt = try OSRandom().generate(Int.self)
+        
+        return ResponseWrapper(protocolCode: .success, obj: randomInt).makeResponse()
     }
 
     // Example of configuring a controller
