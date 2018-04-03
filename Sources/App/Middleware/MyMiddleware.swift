@@ -11,11 +11,35 @@ class MyMiddleware: Middleware, Service {
     
     func respond(to request: Request, chainingTo next: Responder) throws -> Future<Response> {
         
-        return try next.respond(to: request).map { response in
-            response.http.headers.replaceOrAdd(name: .contentType, value: "application/json")
+        let promise = request.eventLoop.newPromise(Response.self)
+        
+        func handleError(_ error: Swift.Error) {
+            let res = request.makeResponse()
             
-            return response
+            res.http.headers.replaceOrAdd(name: .contentType, value: "application/json")
+            
+            let reason: String = error.localizedDescription
+            
+            let bodyStr = ResponseWrapper<DefaultResponseObj>(protocolCode: .failInternalError, msg: reason).makeResponse()
+            res.http.body = HTTPBody(string: bodyStr)
+            
+            promise.succeed(result: res)
         }
+        
+        do {
+            try next.respond(to: request).do { res in
+                
+                res.http.headers.replaceOrAdd(name: .contentType, value: "application/json")
+                
+                promise.succeed(result: res)
+            }.catch { error in
+                handleError(error)
+            }
+        } catch {
+            handleError(error)
+        }
+        
+        return promise.futureResult
     }
     
 }

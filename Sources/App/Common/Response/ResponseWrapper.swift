@@ -9,20 +9,29 @@ import Foundation
 
 class ResponseWrapper<T>: Codable where T: Codable {
     private var code: ProtocolCode!
+    private var msg: String = ""
     private var obj: T?
     
     init(protocolCode: ProtocolCode) {
         self.code = protocolCode
+        self.msg = protocolCode.getMsg()
     }
     
     init(obj: T) {
         self.code = ProtocolCode.success
         self.obj = obj
+        self.msg = ProtocolCode.success.getMsg()
     }
     
     init(protocolCode: ProtocolCode, obj: T) {
         self.code = protocolCode
         self.obj = obj
+        self.msg = protocolCode.getMsg()
+    }
+    
+    init(protocolCode: ProtocolCode, msg: String) {
+        self.code = protocolCode
+        self.msg = msg
     }
     
     func makeResponse() -> String {
