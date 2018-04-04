@@ -81,8 +81,8 @@ public func routes(_ router: Router) throws {
         }
         
         // Random
-        group.get("random") { req -> String in
-            let randomInt = try OSRandom().generate(Int.self)
+        group.get("random") { req -> String in            
+            let randomInt = try OSRandom().generate(UInt8.self) % 100
             
             return ResponseWrapper(protocolCode: .success, obj: randomInt).makeResponse()
         }
