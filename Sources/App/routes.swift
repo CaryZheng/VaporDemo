@@ -67,7 +67,7 @@ public func routes(_ router: Router) throws {
         }
         
         // AES128
-        group.get("crypto", "aes128", String.parameter) { req -> String in
+        group.get("aes128", String.parameter) { req -> String in
             let value = try req.parameter(String.self)
             
             let key = "qwertgfdsa123490"
@@ -81,7 +81,7 @@ public func routes(_ router: Router) throws {
         }
         
         // Random
-        group.get("crypto", "random") { req -> String in
+        group.get("random") { req -> String in
             let randomInt = try OSRandom().generate(Int.self)
             
             return ResponseWrapper(protocolCode: .success, obj: randomInt).makeResponse()
