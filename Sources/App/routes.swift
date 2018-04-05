@@ -96,7 +96,7 @@ public func routes(_ router: Router) throws {
             let port = 80
             let path = "/anything"
             
-            let loop = MultiThreadedEventLoopGroup(numThreads: 1).next()
+            let loop = req.eventLoop
             return HTTPClient.connect(hostname: hostname, port: port, on: loop).flatMap(to: HTTPResponse.self) { client in
                 var req = HTTPRequest(method: .GET, url: URL(string: path)!)
                 req.headers.replaceOrAdd(name: .host, value: hostname)
