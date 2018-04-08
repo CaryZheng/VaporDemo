@@ -13,6 +13,19 @@ public func routes(_ router: Router) throws {
         return "Hello, world!"
     }
     
+    // log
+    router.get("log") { req -> String in
+        let logger = try req.make(Logger.self)
+        logger.info("log: info")
+        logger.debug("log: debug")
+        logger.error("log: error")
+        logger.fatal("log: fatal")
+        logger.verbose("log: verbose")
+        logger.warning("log: warning")
+        
+        return ResponseWrapper<DefaultResponseObj>(protocolCode: .success).makeResponse()
+    }
+    
     router.get("test") { req -> String in
         struct TestUser: Codable {
             var name: String
