@@ -43,6 +43,21 @@ public func routes(_ router: Router) throws {
         }
     }
     
+    // Fetch users by page
+    router.get("users", "pagelist") { req -> Future<[User]> in
+        let pageSize = try? req.query.get(Int.self, at: "pageSize")
+        let startPage = try? req.query.get(Int.self, at: "startPage")
+        
+        if let pageSize = pageSize, let startPage = startPage {
+            let startIndex = startPage * pageSize
+            let endIndex = startIndex + pageSize
+            let queryRange: Range = startIndex..<endIndex
+            return User.query(on: req).range(queryRange).all()
+        }
+        
+        throw MyException.requestParamError
+    }
+    
     // Create new user
     router.post("users") { req -> Future<String> in
         let result = try req.content.decode(User.self).map(to: String.self) { user in
