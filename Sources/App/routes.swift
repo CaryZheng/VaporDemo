@@ -36,27 +36,8 @@ public func routes(_ router: Router) throws {
         return response
     }
     
-    // HTTP
-    router.group("http") { group in
-        // Get
-        group.get("get") { req -> Future<String> in
-            let hostname = "httpbin.org"
-            let port = 80
-            let path = "/anything"
-            
-            let loop = req.eventLoop
-            return HTTPClient.connect(hostname: hostname, port: port, on: loop).flatMap(to: HTTPResponse.self) { client in
-                var req = HTTPRequest(method: .GET, url: URL(string: path)!)
-                req.headers.replaceOrAdd(name: .host, value: hostname)
-                req.headers.replaceOrAdd(name: .userAgent, value: "vapor/engine")
-                return client.respond(to: req, on: loop)
-            }.map(to: String.self) { res in
-                return String(data: res.body.data ?? Data(), encoding: .ascii)!
-            }
-        }
-    }
-    
     try router.register(collection: UserController())
     try router.register(collection: CryptoController())
+    try router.register(collection: HttpController())
 }
 
