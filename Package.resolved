@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/vapor/core.git",
         "state": {
           "branch": null,
-          "revision": "5383e40f19d71da99e496afa9972c085abc2379d",
-          "version": "3.0.2"
+          "revision": "2ad95efabedc228ddbadee1974f6bbaac6c89abd",
+          "version": "3.0.3"
         }
       },
       {
@@ -132,8 +132,8 @@
         "repositoryURL": "https://github.com/vapor/template-kit.git",
         "state": {
           "branch": null,
-          "revision": "61ed3d3b0df4c181d6b88e06b418f425978ac2af",
-          "version": "1.0.0-rc.2.0.3"
+          "revision": "497b987a79291c3743fe4ba6f17eadcdf20c1728",
+          "version": "1.0.0"
         }
       },
       {

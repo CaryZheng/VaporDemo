@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ResponseWrapper<T>: Codable where T: Codable {
+class ResponseWrapper<T: Codable>: Codable {
     private var code: ProtocolCode!
     private var msg: String = ""
     private var obj: T?
