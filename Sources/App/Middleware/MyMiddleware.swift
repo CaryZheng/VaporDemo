@@ -6,6 +6,7 @@
 //
 
 import Vapor
+import Validation
 
 class MyMiddleware: Middleware, Service {
     
@@ -20,7 +21,13 @@ class MyMiddleware: Middleware, Service {
             
             let reason: String = error.localizedDescription
             
-            let bodyStr = ResponseWrapper<DefaultResponseObj>(protocolCode: .failInternalError, msg: reason).makeResponse()
+            var protocolCode = ProtocolCode.failInternalError
+            if error is ValidationError
+                || error is MyException {
+                protocolCode = ProtocolCode.failParamError
+            }
+            
+            let bodyStr = ResponseWrapper<DefaultResponseObj>(protocolCode: protocolCode, msg: reason).makeResponse()
             res.http.body = HTTPBody(string: bodyStr)
             
             promise.succeed(result: res)

@@ -53,6 +53,8 @@ class UserController: RouteCollection {
     // Create new user
     func createUser(_ req: Request) throws -> Future<String> {
         let result = try req.content.decode(User.self).map(to: String.self) { user in
+            try user.validate()
+            
             _ = user.save(on: req)
             
             return ResponseWrapper(protocolCode: .success, obj: user).makeResponse()

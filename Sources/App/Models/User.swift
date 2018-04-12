@@ -7,6 +7,7 @@
 
 import FluentMySQL
 import Vapor
+import Validation
 
 final class User: MySQLModel {
     var id: Int?
@@ -28,3 +29,14 @@ extension User: Migration {}
 
 /// Allows `User` to be used as a dynamic parameter in route definitions.
 extension User: Parameter {}
+
+extension User: Validatable {
+    
+    static func validations() throws -> Validations<User> {
+        var validations = Validations(User.self)
+        try validations.add(\.username, .count(2...))
+        
+        return validations
+    }
+    
+}

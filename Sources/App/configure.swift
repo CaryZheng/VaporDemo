@@ -28,7 +28,7 @@ public func configure(
     services.register(MyMiddleware.self) { container in MyMiddleware() }
     
     // Configure a MySQL database
-    let mysqlConfig = MySQLDatabaseConfig(hostname: "localhost", port: 3306, username: "ZWeatherUser", password: "ZWeatherUser123456", database: "vapor_test")
+    let mysqlConfig = MySQLDatabaseConfig(hostname: "127.0.0.1", port: 3306, username: "ZWeatherUser", password: "ZWeatherUser123456", database: "vapor_test")
     services.register(mysqlConfig)
     
     // Configure migrations
