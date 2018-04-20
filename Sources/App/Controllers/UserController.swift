@@ -25,7 +25,7 @@ class UserController: RouteCollection {
     
     // Fetch specified user
     func getSpecifiedUser(_ req: Request) throws -> Future<String> {
-        let userId = try req.parameter(Int.self)
+        let userId = try req.parameters.next(Int.self)
         return try User.query(on: req).filter(\.id == userId).first().map(to: String.self) { user in
             if user != nil {
                 return ResponseWrapper(protocolCode: .success, obj: user).makeResponse()

@@ -18,14 +18,12 @@ class HttpController: RouteCollection {
     func get(_ req: Request) throws -> Future<String> {
         let hostname = "httpbin.org"
         let port = 80
-        let path = "/anything"
+        let path = "/ip"
         
         let loop = req.eventLoop
         return HTTPClient.connect(hostname: hostname, port: port, on: loop).flatMap(to: HTTPResponse.self) { client in
-            var req = HTTPRequest(method: .GET, url: URL(string: path)!)
-            req.headers.replaceOrAdd(name: .host, value: hostname)
-            req.headers.replaceOrAdd(name: .userAgent, value: "vapor/engine")
-            return client.respond(to: req, on: loop)
+            let req = HTTPRequest(method: .GET, url: URL(string: path)!)
+            return client.send(req)
             }.map(to: String.self) { res in
                 return String(data: res.body.data ?? Data(), encoding: .ascii)!
         }

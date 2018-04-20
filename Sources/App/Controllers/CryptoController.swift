@@ -21,7 +21,7 @@ class CryptoController: RouteCollection {
     
     // hash
     func hash(_ req: Request) throws -> String {
-        let value = try req.parameter(String.self)
+        let value = try req.parameters.next(String.self)
         
         let hashData = try SHA1.hash(value)
         let result = hashData.hexEncodedString()
@@ -31,7 +31,7 @@ class CryptoController: RouteCollection {
     
     // aes128
     func aes128(_ req: Request) throws -> String {
-        let value = try req.parameter(String.self)
+        let value = try req.parameters.next(String.self)
         
         let key = "qwertgfdsa123490"
         
