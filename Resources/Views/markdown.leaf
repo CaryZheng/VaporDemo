@@ -1,8 +1,0 @@
-#extend("base")
-
-#export("title") { Markdown example }
-
-#export("content") {
-	#markdown(myMarkdown)
-}
-

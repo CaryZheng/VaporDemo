@@ -1,61 +1,42 @@
+//
+//  User.swift
+//  App
+//
+//  Created by CaryZheng on 2018/3/19.
+//
+
+import FluentMySQL
 import Vapor
-import FluentProvider
+import Validation
 
-final class User: Model {
-    let storage = Storage()
+final class User: MySQLModel {
+    var id: Int?
+    var username: String
+    var age: Int
     
-    var name: String
-    var password: String
-    
-    init(name: String, password: String) {
-        self.name = name
-        self.password = password
-    }
-    
-    // read data from database
-    init(row: Row) throws {
-        name = try row.get("name")
-        password = try row.get("password")
-    }
-    
-    // write data to database
-    func makeRow() throws -> Row {
-        var row = Row()
-        try row.set("name", name)
-        try row.set("password", password)
-        return row
+    init(id: Int? = nil, username: String, age: Int) {
+        self.id = id
+        self.username = username
+        self.age = age
     }
 }
 
-extension User: Preparation {
+/// Allows `User` to be encoded to and decoded from HTTP messages.
+extension User: Content {}
 
-    static func prepare(_ database: Database) throws {
-        try database.create(self) { builder in
-            builder.id()
-            builder.string("name")
-            builder.string("password")
-        }
+/// Allows `User` to be used as a dynamic migration.
+extension User: Migration {}
+
+/// Allows `User` to be used as a dynamic parameter in route definitions.
+extension User: Parameter {}
+
+extension User: Validatable {
+    
+    static func validations() throws -> Validations<User> {
+        var validations = Validations(User.self)
+        try validations.add(\.username, .count(2...))
+        
+        return validations
     }
     
-    static func revert(_ database: Database) throws {
-//        try database.delete(self)
-    }
 }
-
-extension User: JSONConvertible {
-    convenience init(json: JSON) throws {
-        try self.init(
-            name: json.get("name"),
-            password: json.get("password")
-        )
-    }
-    
-    func makeJSON() throws -> JSON {
-        var json = JSON()
-        try json.set("name", name)
-        try json.set("password", password)
-        return json
-    }
-}
-
-extension User: ResponseRepresentable { }

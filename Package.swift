@@ -1,30 +1,19 @@
+// swift-tools-version:4.0
 import PackageDescription
 
 let package = Package(
     name: "VaporDemo",
-    targets: [
-        Target(name: "App"),
-        Target(name: "Run", dependencies: ["App"]),
-    ],
     dependencies: [
-        .Package(url: "https://github.com/vapor/vapor.git", majorVersion: 2),
+        // 💧 A server-side Swift web framework.
+        .package(url: "https://github.com/vapor/vapor.git", from: "3.0.0-rc.2"),
         // mysql
-        .Package(url: "https://github.com/vapor/mysql-provider.git", majorVersion: 2),
-        // redis
-        .Package(url: "https://github.com/vapor/redis-provider.git", majorVersion: 2),
-        // crypto
-        .Package(url: "https://github.com/krzyzanowskim/CryptoSwift.git", majorVersion: 0),
-        // leaf
-        .Package(url: "https://github.com/vapor/leaf-provider.git", majorVersion: 1),
-        // markdown
-        .Package(url: "https://github.com/vapor-community/markdown-provider.git", majorVersion: 1)
+        .package(url: "https://github.com/vapor/fluent-mysql.git", from: "3.0.0-rc.2"),
+        .package(url: "https://github.com/apple/swift-protobuf.git", from: "1.0.3")
     ],
-    exclude: [
-        "Config",
-        "Database",
-        "Localization",
-        "Public",
-        "Resources",
+    targets: [
+        .target(name: "App", dependencies: ["FluentMySQL", "Vapor", "SwiftProtobuf"]),
+        .target(name: "Run", dependencies: ["App"]),
+        .testTarget(name: "AppTests", dependencies: ["App"]),
     ]
 )
 

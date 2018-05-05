@@ -1,59 +1,52 @@
-import HTTP
+//
+//  ResponseWrapper.swift
+//  App
+//
+//  Created by CaryZheng on 2018/3/26.
+//
 
-class ResponseWrapper {
+import Foundation
 
-    fileprivate var mProtocolCode: ProtocolCode?
-    fileprivate var mObj: JSON?
+class ResponseWrapper<T: Codable>: Codable {
+    private var code: ProtocolCode!
+    private var msg: String = ""
+    private var obj: T?
     
-    init(obj: JSON) {
-        self.mProtocolCode = ProtocolCode.success
-        self.mObj = obj
+    init(protocolCode: ProtocolCode) {
+        self.code = protocolCode
+        self.msg = protocolCode.getMsg()
     }
     
-    init(protocolCode: ProtocolCode, obj: JSON? = nil) {
-        self.mProtocolCode = protocolCode
-        self.mObj = obj
+    init(obj: T) {
+        self.code = ProtocolCode.success
+        self.obj = obj
+        self.msg = ProtocolCode.success.getMsg()
     }
     
-}
-
-extension ResponseWrapper: ResponseRepresentable {
-
-    func makeResponse() throws -> Response {
-        var json = JSON()
-        if let mProtocolCode = mProtocolCode {
-            try json.set("code", mProtocolCode.getCode())
-            try json.set("msg", mProtocolCode.getMsg())
-            
-            if let mObj = mObj {
-                try json.set("obj", mObj)
-            }
-        } else {
-            try json.set("code", -1)
-            try json.set("msg", "Unknow")
+    init(protocolCode: ProtocolCode, obj: T) {
+        self.code = protocolCode
+        self.obj = obj
+        self.msg = protocolCode.getMsg()
+    }
+    
+    init(protocolCode: ProtocolCode, msg: String) {
+        self.code = protocolCode
+        self.msg = msg
+    }
+    
+    func makeResponse() -> String {
+        var result = ""
+        
+        let encoder = JSONEncoder()
+        do {
+            let data = try encoder.encode(self)
+            result = String(data: data, encoding: .utf8)!
+            print("result = \(String(describing: result))")
+        } catch {
+            print("Encode error")
         }
         
-        return try json.makeResponse()
-    }
-    
-    func makeResponse(xtoken: String) throws -> Response {
-        var json = JSON()
-        if let mProtocolCode = mProtocolCode {
-            try json.set("code", mProtocolCode.getCode())
-            try json.set("msg", mProtocolCode.getMsg())
-            
-            if let mObj = mObj {
-                try json.set("obj", mObj)
-            }
-        } else {
-            try json.set("code", -1)
-            try json.set("msg", "Unknow")
-        }
-        
-        let headers: [HeaderKey: String] = [
-            "XToken": xtoken
-        ]
-        return Response(status: Status.ok, headers: headers, body: json)
+        return result
     }
     
 }

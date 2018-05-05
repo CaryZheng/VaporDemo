@@ -1,5 +1,4 @@
-
-enum ProtocolCode: Int {
+enum ProtocolCode: Int, Codable {
     case unknown = 0
     
     case success = 200
@@ -11,6 +10,7 @@ enum ProtocolCode: Int {
     
     case failSignIn = 10000
     case failAccountHasExisted = 10001
+    case failAccountNoExisted = 10002
     
     func getMsg() -> String {
         return "\(self)"
@@ -21,3 +21,4 @@ enum ProtocolCode: Int {
     }
     
 }
+
